@@ -1,9 +1,6 @@
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using ShopifySharp.Identity.Application;
-using ShopifySharp.Identity.Application.Services;
-using ShopifySharp.Identity.Domain.Entities;
-using ShopifySharp.Identity.Infrastructure;
+using ShopifySharp.Identity.Application.Dependency;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,32 +9,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddAutoMapper();
 
+builder.Services.AddShopifySharpIdentityDbContext(builder.Configuration.GetConnectionString("DefaultConnection") ?? "");
 
+builder.Services.AddUserManager();
 
-// DbContext sýnýfýný ve baðlantý dizesini yapýlandýrma
-builder.Services.AddDbContext<ShopifySharpDbContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddTokenService();
 
-// ITokenService hizmetinin eklenmesi (örnek olarak)
-//builder.Services.AddScoped<ITokenService, JwtTokenService>();
-
-//// ASP.NET Core Identity'yi eklemek
-builder.Services.AddIdentity<User, IdentityRole>(options =>
-{
-    // Identity ayarlarýný burada yapýlandýrabilirsiniz
-})
-.AddEntityFrameworkStores<ShopifySharpDbContext>() // DbContext'i belirtin
-.AddDefaultTokenProviders();
-
-// UserManager<User> servisini eklemek
-builder.Services.AddScoped<UserManager<User>>();
-
-builder.Services.AddTransient<ITokenService, JwtTokenService>();
-
-builder.Services.AddApplication();
+builder.Services.AddMediatR();
 
 var app = builder.Build();
 

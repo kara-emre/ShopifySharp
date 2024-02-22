@@ -1,10 +1,10 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 
-namespace ShopifySharp.Identity.Application
+namespace ShopifySharp.Identity.Application.Dependency
 {
-    public static class DependencyInjection
+    public static class MediatRDependency
     {
-        public static IServiceCollection AddApplication(this IServiceCollection services)
+        public static IServiceCollection AddMediatR(this IServiceCollection services)
         {
             services.AddMediatR(cf => cf.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies()));
 

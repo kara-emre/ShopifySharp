@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopifySharp.Identity.Infrastructure;
+using ShopifySharp.Identity.Infrastructure.Context;
 
 #nullable disable
 
 namespace ShopifySharp.Identity.Infrastructure.Migrations
 {
-    [DbContext(typeof(ShopifySharpDbContext))]
+    [DbContext(typeof(ShopifySharpIdentityDbContext))]
     partial class ShopifySharpDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

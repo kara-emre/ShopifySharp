@@ -5,13 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using ShopifySharp.Identity.Infrastructure;
+using ShopifySharp.Identity.Infrastructure.Context;
 
 #nullable disable
 
 namespace ShopifySharp.Identity.Infrastructure.Migrations
 {
-    [DbContext(typeof(ShopifySharpDbContext))]
+    [DbContext(typeof(ShopifySharpIdentityDbContext))]
     [Migration("20240221205238_FirstMigration")]
     partial class FirstMigration
     {

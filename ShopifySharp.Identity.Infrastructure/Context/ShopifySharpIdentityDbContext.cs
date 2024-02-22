@@ -1,12 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ShopifySharp.Identity.Domain.Entities;
 
-namespace ShopifySharp.Identity.Infrastructure
+namespace ShopifySharp.Identity.Infrastructure.Context
 {
-    public class ShopifySharpDbContext : DbContext
+    public class ShopifySharpIdentityDbContext : DbContext
     {
         public DbSet<User> User { get; set; }
-        public ShopifySharpDbContext(DbContextOptions<ShopifySharpDbContext> options) : base(options)
+        public ShopifySharpIdentityDbContext(DbContextOptions<ShopifySharpIdentityDbContext> options) : base(options)
         {
         }
         // DbContext sınıfınızın özellikleri ve yapılandırması buraya gelecek

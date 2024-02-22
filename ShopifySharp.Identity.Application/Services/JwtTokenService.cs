@@ -29,17 +29,17 @@ namespace ShopifySharp.Identity.Application.Services
         public string GenerateToken(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"] ?? string.Empty);
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[]
                 {
                     new Claim(ClaimTypes.NameIdentifier, user.Id),
-                    new Claim(ClaimTypes.Name, user.UserName),
+                    new Claim(ClaimTypes.Name, user.UserName??""),
                     // Ek olarak istediğiniz diğer bilgileri de buraya ekleyebilirsiniz
                 }),
-                Expires = DateTime.UtcNow.AddHours(Convert.ToDouble(_configuration["Jwt:ExpireHours"])),
+                Expires = DateTime.UtcNow.AddHours(Convert.ToDouble(_configuration["Jwt:ExpireHours"] ?? "0")),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
 
@@ -50,7 +50,7 @@ namespace ShopifySharp.Identity.Application.Services
         public bool ValidateToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"] ?? string.Empty);
 
             try
             {
@@ -74,7 +74,7 @@ namespace ShopifySharp.Identity.Application.Services
         public string RefreshToken(string token)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"]);
+            var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Secret"] ?? "");
 
             // Token'ın geçerliliğini doğrulama
             var validationParameters = new TokenValidationParameters
