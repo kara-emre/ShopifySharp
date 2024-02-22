@@ -1,0 +1,19 @@
+version: '3.4'
+
+services:
+  identity-api: 
+    build: 
+      context: ..\ShopifySharp\ShopifySharp.Identity.Api
+    container_name: shopping_identity
+    ports:
+      - "8010:443"
+    depends_on:
+      - database
+    
+  database:
+    image: mcr.microsoft.com/mssql/server:latest
+    environment:
+      SA_PASSWORD: "E1mre.karam" # MSSQL root şifresi
+      ACCEPT_EULA: "Y" # EULA'yi kabul etmek için "Y" olarak ayarlanmalıdır
+    ports:
+      - "1433:1433" # Ana makine portu:Kapsayıcı portu
